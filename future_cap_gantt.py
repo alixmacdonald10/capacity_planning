@@ -271,9 +271,10 @@ fig = px.timeline(
     df,
     x_start="expected_date", x_end="end_date", y="project",
     color="resource",
-    title=f'Department Capacity - Winning every job with >50% prediction<br>CAPACITY:<br>Total project hours required = {round(project_time, 1)} | Team project work capacity = {cap_fact} | Total workable hours of team = {round(team_work_hours, 1)} | Discrepancy = {round(discrep, 1)}| Additional personnel required (est.) = {round(personnel_req, 1)} | Projects value = £{max_value:,.2f}',
-    text=df['probability']
+    title=f'Department Capacity - Winning every job with >50% prediction<br>CAPACITY:<br>Total project hours required = {round(project_time, 1)} | Team project work capacity = {cap_fact} | Total workable hours of team = {round(team_work_hours, 1)} | Discrepancy = {round(discrep, 1)}| Additional personnel required (est.) = {round(personnel_req, 1)} | Total projects value = £{max_value:,.2f}',
+    text='PROBABILITY: >' + df['probability'].astype(str) + '% VALUE: £' + df['value'].astype(str)
 )
+fig.update_traces(textposition='inside')
 fig.update_yaxes(autorange="reversed")
 fig.show()
 
@@ -291,10 +292,11 @@ fig2 = px.timeline(
     df_75,
     x_start="expected_date", x_end="end_date", y="project",
     color="resource",
-    title=f'Department Capacity - Winning every job with >75% prediction<br>CAPACITY:<br>Total project hours required = {round(project_time, 1)} | Team project work capacity = {cap_fact} | Total workable hours of team = {round(team_work_hours, 1)} | Discrepancy = {round(discrep, 1)}| Additional personnel required (est.) = {round(personnel_req, 1)} | Projects value = £{max_value:,.2f}',
-    text=df_75['probability']
+    title=f'Department Capacity - Winning every job with >75% prediction<br>CAPACITY:<br>Total project hours required = {round(project_time, 1)} | Team project work capacity = {cap_fact} | Total workable hours of team = {round(team_work_hours, 1)} | Discrepancy = {round(discrep, 1)}| Additional personnel required (est.) = {round(personnel_req, 1)} | Total projects value = £{max_value:,.2f}',
+    text='PROBABILITY: >' + df_75['probability'].astype(str) + '% VALUE: £' + df_75['value'].astype(str)
 )
 fig2.update_yaxes(autorange="reversed")
+fig2.update_traces(textposition='inside')
 fig2.show()
 
 
@@ -316,8 +318,9 @@ max_value = sum(df_rand['value'])
 fig3 = px.timeline(
     df_rand, x_start="expected_date",
     x_end="end_date", y="project", color="resource",
-    title=f'Department Capacity - Random ({remove_n}) projects dropped from overall {len(df)} projects<br>CAPACITY:<br>Total project hours required = {round(project_time, 1)} | Team project work capacity = {cap_fact} | Total workable hours of team = {round(team_work_hours, 1)} | Discrepancy = {round(discrep, 1)}| Additional personnel required (est.) = {round(personnel_req, 1)} | Projects value = £{max_value:,.2f}',
-    text=df_rand['probability']
+    title=f'Department Capacity - Random ({remove_n}) projects dropped from overall {len(df)} projects<br>CAPACITY:<br>Total project hours required = {round(project_time, 1)} | Team project work capacity = {cap_fact} | Total workable hours of team = {round(team_work_hours, 1)} | Discrepancy = {round(discrep, 1)}| Additional personnel required (est.) = {round(personnel_req, 1)} | Total projects value = £{max_value:,.2f}',
+    text='PROBABILITY: >' + df_rand['probability'].astype(str) + '% VALUE: £' + df_rand['value'].astype(str)
 )
 fig3.update_yaxes(autorange="reversed")
+fig3.update_traces(textposition='inside')
 fig3.show()
