@@ -69,7 +69,8 @@ project = [
     "Stourmouth",
     "Clifton Ings",
     "Rosneft 2",
-    "Filter Feed Pumps (Screw Pumps Replacement - Sharjah"
+    "Filter Feed Pumps (Screw Pumps Replacement - Sharjah",
+    "Pynes"
 ]
 
 value = [
@@ -97,7 +98,8 @@ value = [
     200000.00,
     130000.00,
     309800.00,
-    140000.00
+    140000.00,
+    1
 ]
 
 probability = [
@@ -125,7 +127,8 @@ probability = [
     50,
     75,
     50,
-    50
+    50,
+    100
 ]
 
 expected_date = [
@@ -153,7 +156,8 @@ expected_date = [
     "2021-08-01",
     "2021-09-01",
     "2021-10-01",
-    "2021-12-01"
+    "2021-12-01",
+    "2021-05-31"
 ]
 
 difficulty = [
@@ -182,7 +186,8 @@ difficulty = [
     "Std Engineered",
     "Std Engineered",
     "Std Engineered",
-    "Bespoke Engineered"
+    "Bespoke Engineered",
+    "Std Engineered"
 ]
 
 # Create dataframe
@@ -259,13 +264,14 @@ project_time = sum(df['time'])
 team_work_hours = yearly_work_hours_remaining * cap_fact
 discrep = project_time - team_work_hours
 personnel_req = discrep / (indv_yearly_work_hours_remaining * cap_fact)
+max_value = sum(df['value'])
 
 # plot all jobs on a gannt chart
 fig = px.timeline(
     df,
     x_start="expected_date", x_end="end_date", y="project",
     color="resource",
-    title=f'Department Capacity - Winning every job with >50% prediction<br>CAPACITY:<br>Total project hours required = {round(project_time, 1)} | Team project work capacity = {cap_fact} | Total workable hours of team = {round(team_work_hours, 1)} | Discrepancy = {round(discrep, 1)}| Additional personnel required (est.) = {round(personnel_req, 1)}',
+    title=f'Department Capacity - Winning every job with >50% prediction<br>CAPACITY:<br>Total project hours required = {round(project_time, 1)} | Team project work capacity = {cap_fact} | Total workable hours of team = {round(team_work_hours, 1)} | Discrepancy = {round(discrep, 1)}| Additional personnel required (est.) = {round(personnel_req, 1)} | Projects value = £{max_value:,.2f}',
     text=df['probability']
 )
 fig.update_yaxes(autorange="reversed")
@@ -279,12 +285,13 @@ project_time = sum(df_75['time'])
 team_work_hours = yearly_work_hours_remaining * cap_fact
 discrep = project_time - team_work_hours
 personnel_req = discrep / (indv_yearly_work_hours_remaining * cap_fact)
+max_value = sum(df_75['value'])
 
 fig2 = px.timeline(
     df_75,
     x_start="expected_date", x_end="end_date", y="project",
     color="resource",
-    title=f'Department Capacity - Winning every job with >75% prediction<br>CAPACITY:<br>Total project hours required = {round(project_time, 1)} | Team project work capacity = {cap_fact} | Total workable hours of team = {round(team_work_hours, 1)} | Discrepancy = {round(discrep, 1)}| Additional personnel required (est.) = {round(personnel_req, 1)}',
+    title=f'Department Capacity - Winning every job with >75% prediction<br>CAPACITY:<br>Total project hours required = {round(project_time, 1)} | Team project work capacity = {cap_fact} | Total workable hours of team = {round(team_work_hours, 1)} | Discrepancy = {round(discrep, 1)}| Additional personnel required (est.) = {round(personnel_req, 1)} | Projects value = £{max_value:,.2f}',
     text=df_75['probability']
 )
 fig2.update_yaxes(autorange="reversed")
@@ -304,11 +311,12 @@ project_time = sum(df_rand['time'])
 team_work_hours = yearly_work_hours_remaining * cap_fact
 discrep = project_time - team_work_hours
 personnel_req = discrep / (indv_yearly_work_hours_remaining * cap_fact)
+max_value = sum(df_rand['value'])
 
 fig3 = px.timeline(
     df_rand, x_start="expected_date",
     x_end="end_date", y="project", color="resource",
-    title=f'Department Capacity - Random ({remove_n}) projects dropped from overall {len(df)} projects<br>CAPACITY:<br>Total project hours required = {round(project_time, 1)} | Team project work capacity = {cap_fact} | Total workable hours of team = {round(team_work_hours, 1)} | Discrepancy = {round(discrep, 1)}| Additional personnel required (est.) = {round(personnel_req, 1)}',
+    title=f'Department Capacity - Random ({remove_n}) projects dropped from overall {len(df)} projects<br>CAPACITY:<br>Total project hours required = {round(project_time, 1)} | Team project work capacity = {cap_fact} | Total workable hours of team = {round(team_work_hours, 1)} | Discrepancy = {round(discrep, 1)}| Additional personnel required (est.) = {round(personnel_req, 1)} | Projects value = £{max_value:,.2f}',
     text=df_rand['probability']
 )
 fig3.update_yaxes(autorange="reversed")
